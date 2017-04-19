@@ -1,0 +1,8 @@
+.DS_Store
+*~
+*.log
+*.sqlite
+.tarima
+/build
+/coverage
+/node_modules
