@@ -23,20 +23,16 @@ html
       .wrapper { position: relative; height: 100%; }
       .layer { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
       .canvas { bottom: 150px; background-color: white; padding: 30px; }
-      .navigation { top: auto; height: 100px; overflow: auto; }
-      .overlay { top: -100%; bottom: auto; transition: .3s; background-color: rgba(0,0,0,.1); }
+      .actions { top: auto; height: 100px; overflow: hidden; }
 
       .element {
-        padding: 30px;
         height: 100%;
-        min-width: 33.33%;
+        width: 33.33%;
         text-align: center;
         display: inline-block;
       }
 
       .element:hover { background-color: silver; }
-
-      .information { float: right; }
 
       .flip-container {
         height: 100%;
@@ -48,8 +44,7 @@ html
       .front { background-color: silver; }
 
       .flip-label {
-        display: block;
-        margin-bottom: 30px;
+        float: right;
       }
 
       .flip-trigger { display: none; }
@@ -68,6 +63,7 @@ html
       .centered .content { text-align: center; flex: 1 1 auto; }
 
       .flipper {
+        margin-top: 30px;
         transition: 0.6s;
         transform-style: preserve-3d;
         position: relative;
@@ -89,9 +85,9 @@ html
     .wrapper
       .layer.canvas
         .flip-container
-          span.information MORE INFO (?)
+          span IMAGE TITLE HERE
           input#flipper.flip-trigger(type='checkbox')
-          label.flip-label(for='flipper') DETAILS
+          label.flip-label(for='flipper') MORE INFO (?)
           .flipper
             .front
               .centered
@@ -99,14 +95,13 @@ html
             .back
               .centered
                 .content INFO
-      .layer.navigation
+      .layer.actions
         .element
           .centered
-            .content PREV
+            .content YES
         .element
           .centered
-            .content CURRENT
+            .content Is this image #[b something] valid?
         .element
           .centered
-            .content NEXT
-      .layer.overlay OVERLAY
+            .content NO
