@@ -7,7 +7,7 @@
     "dev": "tarima -w --server --port 3001",
     "dev:reload": "tarima -w --server --proxy localhost:8080 --port 3001 --reload app/reload",
     "dev:grown": "tarima -w --server --proxy localhost:8080 --port 3001 -- grown up --port 8080",
-    "postinstall": "tarima -fq"
+    "postinstall": "./node_modules/.bin/tarima -fq"
   },
   "tarima": {
     "src": "_src/**",
@@ -70,6 +70,7 @@
     "morgan": "^1.8.1",
     "route-mappings": "^0.3.2",
     "serve-static": "^1.12.1",
+    "sqlite3": "^3.1.8",
     "tarima-lr": "^0.0.12"
   },
   "optionalDependencies": {
@@ -83,7 +84,6 @@
     "less-plugin-autoprefix": "^1.5.1",
     "pug": "^2.0.0-beta.12",
     "rollup": "^0.41.6",
-    "sqlite3": "^3.1.8",
     "talavera": "^0.2.2",
     "tarima-cli": "gextech/tarima-cli"
   }
