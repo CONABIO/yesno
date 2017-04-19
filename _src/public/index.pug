@@ -20,7 +20,7 @@ html
 
       body { margin: 0; }
       body, html { height: 100%; }
-      .wrapper { position: relative; height: 100%; }
+      .wrapper { position: relative; height: 100%; max-width: 680px; margin: auto; }
       .layer { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
       .canvas { bottom: 150px; background-color: white; padding: 30px; }
       .actions { top: auto; height: 100px; overflow: hidden; }
@@ -32,7 +32,7 @@ html
         display: inline-block;
       }
 
-      .element:hover { background-color: silver; }
+      .action:hover { background-color: silver; }
 
       .flip-container {
         height: 100%;
@@ -97,11 +97,11 @@ html
                 .content INFO
       .layer.actions
         .element
-          .centered
+          .centered.action
             .content YES
         .element
           .centered
-            .content Is this image #[b something] valid?
+            .content Is this image #[b *something*] valid?
         .element
-          .centered
+          .centered.action
             .content NO
