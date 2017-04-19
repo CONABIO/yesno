@@ -7,7 +7,7 @@
     "dev": "tarima -w --server --port 3001",
     "dev:reload": "tarima -w --server --proxy localhost:8080 --port 3001 --reload app/reload",
     "dev:grown": "tarima -w --server --proxy localhost:8080 --port 3001 -- grown up --port 8080",
-    "heroku-postbuild": "tarima -fq"
+    "postinstall": "tarima -fq"
   },
   "tarima": {
     "src": "_src/**",
