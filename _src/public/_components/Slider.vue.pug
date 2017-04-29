@@ -30,17 +30,13 @@ template
 
                     dt Coordenadas
                     dd
-                      img(src='//placehold.it/320x200')
-                      p {{loadedImage.media_info.geom.coordinates}}
+                      img(v-bind:src='fixedImageMap')
 
                     dt Detector
                     dd {{loadedImage.media_info.detector}}
 
-                    dt dislikes
-                    dd {{loadedImage.dislikes}}
-
-                    dt likes
-                    dd {{loadedImage.likes}}
+                    dt Reputación
+                    dd WIP: some UI indicator (total/yes/no)
 
                 fieldset
                   legend Calidad de la imagen:
@@ -92,6 +88,24 @@ script.
           this.loadedImageOffset = 0;
           this.loadImage(this.loadedImageOffset);
         });
+    },
+    computed: {
+      fixedImageMap() {
+        const size = '400x300';
+
+        if (!this.showInfo) {
+          return `//placehold.it/${size}`;
+        }
+
+        const coords = [
+          this.loadedImage.media_info.geom.coordinates[1],
+          this.loadedImage.media_info.geom.coordinates[0],
+        ].join(',');
+
+        /* global GMAPS_KEY */
+
+        return `//maps.googleapis.com/maps/api/staticmap?center=${coords}&zoom=9&size=${size}&markers=color:red|${coords}&key=${GMAPS_KEY}`;
+      },
     },
     methods: {
       prevImage() {
