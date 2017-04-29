@@ -1,0 +1,153 @@
+template
+  .wrapper
+    .layer.top.tool
+      button.item(@click='prevImage') &lt;
+
+      .fit.item(v-if='loadedImage') {{loadedImage.pred_species}} #[span.dimmed ({{loadedImageOffset + 1}} de {{allImages.length}})]
+      .fit.item(v-else) Cargando datos...
+
+      button.item(@click='nextImage') &gt;
+
+    .layer.mid
+      .flip-container
+        .flipper(v-if='loadedImage' v-bind:class='{ flip: showInfo }')
+          .front
+            .centered
+              .content(@click='toggleInput')
+                .center
+                  img(v-bind:src='"data/" + loadedImage.spec_img')
+          .back(v-if='loadedImage')
+            .centered
+              .content
+                fieldset
+                  legend Propiedades del origen (#[span.dimmed {{loadedImage.media_info.file_name}}]):
+                  dl
+                    dt Probabilidad
+                    dd {{loadedImage.pred_probability}}
+
+                    dt Propietario
+                    dd {{loadedImage.media_info.file_owner}}
+
+                    dt Coordenadas
+                    dd
+                      img(src='//placehold.it/320x200')
+                      p {{loadedImage.media_info.geom.coordinates}}
+
+                    dt Detector
+                    dd {{loadedImage.media_info.detector}}
+
+                    dt dislikes
+                    dd {{loadedImage.dislikes}}
+
+                    dt likes
+                    dd {{loadedImage.likes}}
+
+                fieldset
+                  legend Calidad de la imagen:
+                  label.check
+                    input(type='radio' name='quality' value='0' @change='validateInput')
+                    span.label Mala
+                  label.check
+                    input(type='radio' name='quality' value='2' @change='validateInput')
+                    span.label Regular
+                  label.check
+                    input(type='radio' name='quality' value='5' @change='validateInput')
+                    span.label Muy buena
+
+                fieldset
+                  legend ¿La imagen corresponde a {{loadedImage.pred_species}}?
+                  label.check
+                    input(type='radio' name='accuracy' value='yes' @change='validateInput')
+                    span.label Sí
+                  label.check
+                    input(type='radio' name='accuracy' value='no' @change='validateInput')
+                    span.label No
+                  label.check
+                    input(type='radio' name='accuracy' value='maybe' @change='validateInput')
+                    span.label No sé
+
+    .layer.bottom.tool
+      .fit.item.left.dimmed(v-if='loadedImageIsValid') Tu elección ha sido guardada.
+      button.fit.item(v-else-if='loadedImage' @click='toggleInfo') {{showInfo ? 'Ver imagen de muestra' : 'Responder formulario'}}
+      button.item(@click='saveChoice' v-bind:disabled='!loadedImageIsValid') Continuar &gt;
+
+script.
+  /* global fetch */
+
+  export default {
+    data() {
+      return {
+        allImages: [],
+        showInfo: false,
+        loadedImage: null,
+        loadedImageOffset: 0,
+        loadedImageIsValid: null,
+      };
+    },
+    mounted() {
+      fetch('/data.json')
+        .then(resp => resp.json())
+        .then(data => {
+          this.allImages = data;
+          this.loadedImageOffset = 0;
+          this.loadImage(this.loadedImageOffset);
+        });
+    },
+    methods: {
+      prevImage() {
+        if (this.loadedImageOffset > 1) {
+          this.loadedImageOffset -= 1;
+        } else {
+          this.loadedImageOffset = this.allImages.length - 1;
+        }
+
+        this.showInfo = null;
+        this.loadedImage = null;
+        this.loadedImageIsValid =  null;
+        this.loadImage(this.loadedImageOffset);
+      },
+      nextImage() {
+        if (this.loadedImageOffset < (this.allImages.length - 1)) {
+          this.loadedImageOffset += 1;
+        } else {
+          this.loadedImageOffset = 0;
+        }
+
+        this.showInfo = null;
+        this.loadedImage = null;
+        this.loadedImageIsValid =  null;
+        this.loadImage(this.loadedImageOffset);
+      },
+      toggleInfo() {
+        this.showInfo = !this.showInfo;
+      },
+      toggleInput() {
+        console.log(this.$refs);
+      },
+      saveChoice() {
+        if (this.loadedImage.accuracy === 'yes') {
+          this.loadedImage.likes += 1;
+        }
+
+        if (this.loadedImage.accuracy === 'no') {
+          this.loadedImage.likes -= 1;
+        }
+
+        console.log(JSON.stringify(this.loadedImage, null, 2));
+        // FIXME: send payload to server
+
+        this.nextImage();
+      },
+      validateInput(e) {
+        this.loadedImage[e.target.name] = e.target.value;
+        this.loadedImageIsValid = this.loadedImage.accuracy && this.loadedImage.quality;
+      },
+      loadImage(offset) {
+        fetch(`/data/${this.allImages[offset]}.json`)
+          .then(resp => resp.json())
+          .then(data => {
+            this.loadedImage = data;
+          });
+      }
+    },
+  };

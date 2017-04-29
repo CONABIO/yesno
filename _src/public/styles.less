@@ -1,1 +1,220 @@
-h1 { color: #000; }
+@max-width: 680px;
+@tool-height: 30pt;
+@tool-margin: 15px;
+@tool-padding: 10px;
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: 9pt;
+  xoverflow: hidden;
+  font-family: Monospace;
+}
+
+fieldset {
+  border: 1px dotted blue;
+  padding: 0 @tool-padding;
+  margin: 5px;
+
+  ~ fieldset {
+    margin-top: @tool-margin;
+  }
+}
+
+button {
+  cursor: pointer;
+  font-size: 9pt;
+  font-family: Monospace;
+  outline: 1px dotted blue;
+  outline-offset: -5px;
+  color: blue;
+  transition: .3s;
+
+  &:hover {
+    color: white;
+    outline-color: white;
+    background-color: blue !important;
+
+    .dimmed {
+      color: white;
+    }
+  }
+
+  &[disabled] {
+    color: silver;
+    outline-color: silver;
+
+    &:hover {
+      background-color: gray !important;
+    }
+  }
+}
+
+body, html {
+  height: 100%;
+}
+
+img {
+  max-width: 100%;
+}
+
+.wrapper {
+  position: relative;
+  height: 100%;
+  max-width: @max-width;
+  margin: auto;
+}
+
+.layer {
+  background-color: white;
+
+  &.top {
+    left: 0;
+    z-index: 1;
+    position: fixed;
+  }
+
+  &.mid {
+    position: absolute;
+    overflow: auto;
+    bottom: @tool-height;
+    top: @tool-height;
+    right: 0;
+    left: 0;
+  }
+
+  &.bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.actions {
+  top: auto;
+  height: 100px;
+  overflow: hidden;
+}
+
+.element {
+  height: 100%;
+  width: 33.33%;
+  display: inline-block;
+}
+
+.flip-container {
+  height: 100%;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+
+  .flipper.flip > .back {
+    transform: rotateY(0deg);
+  }
+
+  .flipper.flip > .front {
+    transform: rotateY(180deg);
+  }
+}
+
+.flip-container, .front, .back {
+  width: 100%;
+  height: 100%;
+}
+
+.centered {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  > .content {
+    flex: 1 1 auto;
+  }
+}
+
+.flipper {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  height: 100%;
+}
+
+.front, .back {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  position: absolute;
+  transition: 0.6s;
+  top: 0;
+  left: 0;
+}
+
+.front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.back {
+  transform: rotateY(-180deg);
+}
+
+.tool {
+  width: 100%;
+  display: flex;
+  height: @tool-height;
+  background-color: white;
+
+  > .item {
+    border: 0;
+    min-width: 60px;
+    padding: @tool-padding;
+    background-color: transparent;
+
+    &.fit {
+      flex: 1 1 auto;
+    }
+
+    &.left {
+      text-align: left;
+    }
+  }
+}
+
+.check {
+  display: inline-block;
+  padding: @tool-padding 0;
+
+  ~ .check {
+    margin-left: @tool-margin;
+  }
+
+  > .label {
+    opacity: .5;
+    color: gray;
+    transition: .3s;
+    margin-left: .3em;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: line-through;
+  }
+
+  > input:checked ~ .label {
+    opacity: 1;
+    color: black;
+    text-decoration: underline;
+  }
+}
+
+.dimmed {
+  opacity: .5;
+  color: gray;
+  transition: .3s;
+}
+
+.center {
+  text-align: center;
+}

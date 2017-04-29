@@ -1,3 +1,5 @@
+'use strict';
+
 const server = require('./server');
 
 const Module = require('module');
@@ -17,7 +19,7 @@ module.exports = $ => {
     $.logger.printf('\r\rReloading server...');
 
     Object.keys(Module._cache)
-      .forEach((key) => {
+      .forEach(key => {
         if (key.indexOf('node_modules') === -1) {
           delete Module._cache[key];
         }
