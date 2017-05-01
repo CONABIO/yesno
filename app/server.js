@@ -12,12 +12,21 @@ Grown.env(cwd);
 module.exports = () => {
   const $ = new Grown({
     env: process.env.NODE_ENV || 'development',
+    session: {
+      secret: process.env.SESSION_SECRET || 'secret*value',
+      keys: (process.env.SESSION_KEYS || 'secret*value').split(/\s+/),
+      maxAge: parseInt(process.env.SESSION_MAXAGE || 0, 10) || 86400000,
+    },
   });
+
+  if ($.get('env') === 'production') {
+    $.mount(require('serve-static')(path.join(cwd, 'public')));
+  }
 
   $.use(Grown.plugs.render(__dirname));
   $.use(Grown.plugs.router(__dirname));
-
-  $.mount(require('serve-static')(path.join(cwd, 'public')));
+  $.use(Grown.plugs.models(__dirname));
+  $.use(Grown.plugs.session($.get('session')));
 
   return $;
 };

@@ -1,3 +1,3 @@
 module.exports = map =>
   map()
-    .get('/', 'Home#index');
+    .get('/test', 'Home#index');
