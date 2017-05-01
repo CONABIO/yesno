@@ -81,7 +81,7 @@ script.
       };
     },
     mounted() {
-      fetch('/data.json')
+      fetch('/entries')
         .then(resp => resp.json())
         .then(data => {
           this.allImages = data;
@@ -157,7 +157,7 @@ script.
         this.loadedImageIsValid = this.loadedImage.accuracy && this.loadedImage.quality;
       },
       loadImage(offset) {
-        fetch(`/data/${this.allImages[offset]}.json`)
+        fetch(`/data/${this.allImages[offset].ref}.json`)
           .then(resp => resp.json())
           .then(data => {
             this.loadedImage = data;
