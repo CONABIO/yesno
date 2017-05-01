@@ -26,7 +26,9 @@ module.exports = () => {
   $.use(Grown.plugs.render(__dirname));
   $.use(Grown.plugs.router(__dirname));
   $.use(Grown.plugs.models(__dirname));
+
   $.use(Grown.plugs.session($.get('session')));
+  $.mount(require('body-parser').json());
 
   return $;
 };

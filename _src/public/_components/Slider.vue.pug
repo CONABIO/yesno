@@ -41,13 +41,13 @@ template
                 fieldset
                   legend Calidad de la imagen:
                   label.check
-                    input(type='radio' name='quality' value='0' @change='validateInput')
+                    input(type='radio' name='avgQuality' value='0' @change='validateInput')
                     span.label Mala
                   label.check
-                    input(type='radio' name='quality' value='2' @change='validateInput')
+                    input(type='radio' name='avgQuality' value='2' @change='validateInput')
                     span.label Regular
                   label.check
-                    input(type='radio' name='quality' value='5' @change='validateInput')
+                    input(type='radio' name='avgQuality' value='5' @change='validateInput')
                     span.label Muy buena
 
                 fieldset
@@ -139,28 +139,38 @@ script.
         console.log(this.$refs);
       },
       saveChoice() {
-        if (this.loadedImage.accuracy === 'yes') {
-          this.loadedImage.likes += 1;
-        }
-
-        if (this.loadedImage.accuracy === 'no') {
-          this.loadedImage.likes -= 1;
-        }
-
-        console.log(JSON.stringify(this.loadedImage, null, 2));
-        // FIXME: send payload to server
+        // FIXME: add feedback
+        fetch('/entries', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            ref: this.loadedImage.ref,
+            likes: this.loadedImage.accuracy === 'yes' ? 1 : 0,
+            dislikes: this.loadedImage.accuracy === 'no' ? 1 : 0,
+            avgQuality: this.loadedImage.avgQuality,
+          }),
+        });
 
         this.nextImage();
       },
       validateInput(e) {
         this.loadedImage[e.target.name] = e.target.value;
-        this.loadedImageIsValid = this.loadedImage.accuracy && this.loadedImage.quality;
+        this.loadedImageIsValid = this.loadedImage.accuracy && this.loadedImage.avgQuality;
       },
       loadImage(offset) {
         fetch(`/data/${this.allImages[offset].ref}.json`)
           .then(resp => resp.json())
           .then(data => {
-            this.loadedImage = data;
+            this.loadedImage = this.allImages[offset];
+
+            Object.keys(data).forEach(key => {
+              if (typeof this.loadedImage[key] === 'undefined') {
+                this.loadedImage[key] = data[key];
+              }
+            });
           });
       }
     },

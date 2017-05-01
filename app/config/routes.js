@@ -1,3 +1,5 @@
 module.exports = map =>
   map()
-    .get('/entries', 'API#entries');
+    .get('/', 'Home#index')
+    .get('/entries', 'API#entries')
+    .post('/entries', 'API#aggregate');

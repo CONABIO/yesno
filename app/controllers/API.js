@@ -1,11 +1,26 @@
 module.exports = {
   layout: false,
-  inject: {
-    allEntries: $ => $.models.Entry.findAll().map(entry => entry.get()),
-  },
   methods: {
     entries($) {
-      $.resp_body = $.allEntries;
+      $.resp_body = $.models.Entry
+        .findAll({
+          where: {
+            root: true,
+          },
+        })
+        .map(entry => entry.get());
+    },
+    aggregate($) {
+      return $.models.Entry
+        .create({
+          ref: $.params.ref,
+          likes: $.params.likes,
+          dislikes: $.params.dislikes,
+          avgQuality: $.params.avgQuality,
+        })
+        .then(result => {
+          $.resp_body = result;
+        });
     },
   },
 };

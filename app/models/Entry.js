@@ -9,6 +9,9 @@ module.exports = {
       ref: {
         type: 'string',
       },
+      root: {
+        type: 'boolean',
+      },
       likes: {
         type: 'integer',
       },
@@ -19,6 +22,6 @@ module.exports = {
         type: 'number',
       },
     },
-    required: ['id', 'ref', 'likes', 'dislikes', 'avgQuality'],
+    required: ['id', 'ref', 'root', 'likes', 'dislikes', 'avgQuality'],
   },
 };
