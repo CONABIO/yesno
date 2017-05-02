@@ -1,6 +1,6 @@
 module.exports = {
   browser: [
-    // 'csurf',
+    'csurf',
   ],
   development: [
     'browser',

@@ -1,14 +1,10 @@
 module.exports = {
   layout: false,
   methods: {
-    entries($) {
-      $.resp_body = $.models.Entry
-        .findAll({
-          where: {
-            root: true,
-          },
-        })
-        .map(entry => entry.get());
+    sources($) {
+      $.resp_body = $.models.Source
+        .findAll()
+        .map(x => x.get());
     },
     aggregate($) {
       return $.models.Entry

@@ -20,25 +20,6 @@ template
             .centered
               .content
                 fieldset
-                  legend Propiedades del origen (#[span.dimmed {{loadedImage.media_info.file_name}}]):
-                  dl
-                    dt Probabilidad
-                    dd {{loadedImage.pred_probability}}
-
-                    dt Propietario
-                    dd {{loadedImage.media_info.file_owner}}
-
-                    dt Coordenadas
-                    dd
-                      img(v-bind:src='fixedImageMap')
-
-                    dt Detector
-                    dd {{loadedImage.media_info.detector}}
-
-                    dt Reputación
-                    dd WIP: some UI indicator (total/yes/no)
-
-                fieldset
                   legend Calidad de la imagen:
                   label.check
                     input(type='radio' name='avgQuality' value='0' @change='validateInput')
@@ -62,6 +43,28 @@ template
                     input(type='radio' name='accuracy' value='maybe' @change='validateInput')
                     span.label No sé
 
+                fieldset
+                  legend Propiedades del origen:
+                  h3.dimmed {{loadedImage.media_info.file_name}}
+                  dl
+                    dt Probabilidad
+                    dd {{loadedImage.pred_probability}}
+
+                    dt Propietario
+                    dd {{loadedImage.media_info.file_owner}}
+
+                    dt Coordenadas
+                    dd
+                      details
+                        summary {{loadedImage.media_info.geom.coordinates.join(', ')}}
+                        img(v-bind:src='fixedImageMap')
+
+                    dt Detector
+                    dd {{loadedImage.media_info.detector}}
+
+                    dt Reputación
+                    dd WIP: some UI indicator (total/yes/no)
+
     .layer.bottom.tool
       .fit.item.left.dimmed(v-if='loadedImageIsValid') Tu elección ha sido guardada.
       button.fit.item(v-else-if='loadedImage' @click='toggleInfo') {{showInfo ? 'Ver imagen de muestra' : 'Responder formulario'}}
@@ -81,7 +84,7 @@ script.
       };
     },
     mounted() {
-      fetch('/entries')
+      fetch('/sources')
         .then(resp => resp.json())
         .then(data => {
           this.allImages = data;

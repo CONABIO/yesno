@@ -10,22 +10,18 @@ module.exports = ($, argv) => {
     .map(file => path.join(process.cwd(), file))
     .map(file => require(file));
 
-  const Entry = $.extensions.models.Entry;
+  const Source = $.extensions.models.Source;
 
-  console.log('Creating new entries...');
+  console.log('Creating new sources...');
 
-  Entry.destroy({ truncate: true })
+  Source.destroy({ truncate: true })
     .then(() =>
       Promise.all(files.map(data =>
-        Entry.create({
+        Source.create({
           ref: data.id,
-          root: true,
-          likes: data.likes,
-          dislikes: data.likes,
-          avgQuality: 0,
         }))))
-  .then(() => Entry.count().then(count => {
-    console.log(`${count} entries were created`);
+  .then(() => Source.count().then(count => {
+    console.log(`${count} sources were created`);
   }))
   .catch(error => {
     console.log(error.stack);

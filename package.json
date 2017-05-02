@@ -23,11 +23,10 @@
       "!**/_*/**"
     ],
     "bundle": [
-      "**/index.js"
+      "**/views/**"
     ],
     "rename": [
-      "**:{fullpath/1}",
-      "**/index.(css|js):{basedir}.{ext}"
+      "**:{fullpath/1}"
     ],
     "ignoreFiles": [
       ".gitignore"
