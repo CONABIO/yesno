@@ -6,6 +6,8 @@
 Antes de continuar hay que instalar todas las dependencias,
 
 ```
+# activa nodejs
+$ nvm use 4
 $ yarn
 ```
 
@@ -26,7 +28,7 @@ El sistema persiste las respuestas de todas las sesiones en la aplicación,
 de este modo podemos obtener ya sea un promedio o total de cada
 respuesta dada.
 
-Por ejemplo,
+Por ejemplo:
 
 ```
 GET /stats/57843f80016e730f14d3f672_b875be1b982bb6bb70bc3656291d172e
@@ -53,12 +55,20 @@ GET /stats
 }
 ```
 
+
+### ¿Cómo crear la base datos?
+
+Inicia la consola interactiva con `yarn repl` y ejecuta `.sync`
+para crear la base de datos y los modelos necesarios.
+
+> Se mostrará un mensaje "All models synced" si el resultado fue exitoso.
+
 ### ¿Cómo cargar datos?
 
 Primero hay que guardar todos los archivos JSON e imágenes en la carpeta pública de la aplicación,
 de esta forma serán accesibles por la interfaz web.
 
-Ejemplo,
+Ejemplo:
 
 ```
 public/data/
@@ -74,7 +84,7 @@ $ yarn load
 
 ### ¿Cómo desarrollar/iniciar el sistema?
 
-El sistema consiste en dos aplicaciones: una para front-end y otra back-end.
+El sistema consiste en dos aplicaciones: una para front-end y otra back-end:
 
 ```
 # back-end (desarrollo/producción)
