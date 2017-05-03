@@ -63,9 +63,7 @@ para crear la base de datos y los modelos necesarios.
 
 > Se mostrará un mensaje "All models synced" si el resultado fue exitoso.
 
-### ¿Cómo cargar datos?
-
-Primero hay que guardar todos los archivos JSON e imágenes en la carpeta pública de la aplicación,
+Guarda todos los archivos JSON e imágenes en la carpeta pública de la aplicación,
 de esta forma serán accesibles por la interfaz web.
 
 Ejemplo:
