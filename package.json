@@ -4,6 +4,7 @@
   "scripts": {
     "eslint": "eslint app boot config",
     "start": "grown up",
+    "load": "grown seed -- public/data/*.json",
     "dev": "tarima -w --server --port 3001",
     "dev:reload": "tarima -w --server --proxy localhost:8080 --port 3001 --reload app/reload",
     "dev:grown": "tarima -w --server --proxy localhost:8080 --port 3001 -- grown up --port 8080"
@@ -63,10 +64,10 @@
     "cors": "^2.8.3",
     "csurf": "^1.9.0",
     "formidable": "^1.1.1",
-    "grown": "^0.0.11",
+    "grown": "pateketrueke/grown",
     "json-schema-sequelizer": "pateketrueke/json-schema-sequelizer",
     "morgan": "^1.8.1",
-    "pg": "^6.1.5",
+    "sqlite3": "^3.1.8",
     "route-mappings": "^0.3.2",
     "serve-static": "^1.12.1"
   },
@@ -83,7 +84,6 @@
     "less-plugin-autoprefix": "^1.5.1",
     "pug": "^2.0.0-beta.12",
     "rollup": "^0.41.6",
-    "sqlite3": "^3.1.8",
     "talavera": "^0.2.2",
     "tarima-cli": "gextech/tarima-cli"
   }
