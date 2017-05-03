@@ -4,6 +4,8 @@
   "scripts": {
     "eslint": "eslint app boot config",
     "start": "grown up",
+    "build": "tarima -fq",
+    "repl": "grown repl --debug",
     "load": "grown seed -- public/data/*.json",
     "dev": "tarima -w --server --port 3001",
     "dev:reload": "tarima -w --server --proxy localhost:8080 --port 3001 --reload app/reload",
@@ -61,15 +63,12 @@
     "body-parser": "^1.17.1",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.1",
-    "cors": "^2.8.3",
     "csurf": "^1.9.0",
-    "formidable": "^1.1.1",
     "grown": "pateketrueke/grown",
     "json-schema-sequelizer": "pateketrueke/json-schema-sequelizer",
-    "morgan": "^1.8.1",
-    "sqlite3": "^3.1.8",
     "route-mappings": "^0.3.2",
-    "serve-static": "^1.12.1"
+    "serve-static": "^1.12.1",
+    "sqlite3": "^3.1.8"
   },
   "optionalDependencies": {
     "chokidar": "^1.6.1",
@@ -85,6 +84,7 @@
     "pug": "^2.0.0-beta.12",
     "rollup": "^0.41.6",
     "talavera": "^0.2.2",
-    "tarima-cli": "gextech/tarima-cli"
+    "tarima-cli": "gextech/tarima-cli",
+    "vue-template-compiler": "^2.3.2"
   }
 }

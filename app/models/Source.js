@@ -4,6 +4,7 @@ module.exports = {
     properties: {
       id: {
         type: 'integer',
+        allowNull: true,
         primaryKey: true,
       },
       ref: {
