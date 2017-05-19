@@ -7,13 +7,13 @@
     "build": "tarima -fq",
     "repl": "grown repl --debug",
     "load": "grown seed -- public/data/*.json",
-    "dev": "tarima -w --server --port 3001",
-    "dev:reload": "tarima -w --server --proxy localhost:8080 --port 3001 --reload app/reload",
-    "dev:grown": "tarima -w --server --proxy localhost:8080 --port 3001 -- grown up --port 8080"
+    "dev": "tarima -p 3001 -P localhost:8080 -e",
+    "dev:reload": "tarima -P localhost:8080 -p 3001 -r app/reload",
+    "dev:grown": "tarima -P localhost:8080 -p 3001 -- grown up -P 8080"
   },
   "tarima": {
-    "src": "_src/**",
-    "dest": ".",
+    "src": "_src",
+    "dest": "build",
     "public": "public",
     "watch": [
       ".env",
@@ -29,7 +29,8 @@
       "**/views/**"
     ],
     "rename": [
-      "**:{fullpath/1}"
+      "**:{fullpath/1}",
+      "**/{views,public}/**:{fullpath/1}"
     ],
     "ignoreFiles": [
       ".gitignore"
@@ -64,15 +65,15 @@
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.1",
     "csurf": "^1.9.0",
-    "grown": "pateketrueke/grown",
-    "json-schema-sequelizer": "pateketrueke/json-schema-sequelizer",
+    "grown": "^0.1.2",
+    "json-schema-sequelizer": "^0.0.3",
     "route-mappings": "^0.3.2",
     "serve-static": "^1.12.1",
     "sqlite3": "^3.1.8"
   },
   "optionalDependencies": {
     "chokidar": "^1.6.1",
-    "tarima-lr": "^0.0.12"
+    "tarima-lr": "^0.2.2"
   },
   "devDependencies": {
     "buble": "^0.15.2",
@@ -84,7 +85,7 @@
     "pug": "^2.0.0-beta.12",
     "rollup": "^0.41.6",
     "talavera": "^0.2.2",
-    "tarima-cli": "gextech/tarima-cli",
+    "tarima": "^2.0.2",
     "vue-template-compiler": "^2.3.2"
   }
 }

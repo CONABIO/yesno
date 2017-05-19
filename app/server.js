@@ -23,9 +23,23 @@ module.exports = () => {
     $.mount(require('serve-static')(path.join(cwd, 'public')));
   }
 
-  $.use(Grown.plugs.render(__dirname));
-  $.use(Grown.plugs.router(__dirname));
-  $.use(Grown.plugs.models(__dirname));
+  $.use(Grown.plugs.router({
+    middlewares: {
+      settings: path.join(cwd, 'app/config/middlewares.js'),
+      folders: path.join(cwd, 'app/middlewares'),
+    },
+    settings: path.join(cwd, 'app/config/routes.js'),
+    folders: path.join(cwd, 'app/controllers'),
+  }));
+
+  $.use(Grown.plugs.models({
+    settings: path.join(cwd, 'app/config/database.js'),
+    folders: path.join(cwd, 'app/models'),
+  }));
+
+  $.use(Grown.plugs.render({
+    folders: path.join(cwd, 'build/views'),
+  }));
 
   $.use(Grown.plugs.session($.get('session')));
   $.mount(require('body-parser').json());
